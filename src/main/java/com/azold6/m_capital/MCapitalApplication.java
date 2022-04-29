@@ -50,5 +50,23 @@ public class MCapitalApplication implements CommandLineRunner {
 		graph.addNode(nodeF);
 
 		graph = graphService.calculateShortestPathFromSource(graph, nodeA);
-	}
-}
+
+		System.out.println("Menores distâncias a partir do node A:");
+		graph.getNodes().forEach(x -> {
+			String distancia;
+
+			if(x.getShortestPath().isEmpty())
+				return;
+			else
+				distancia = String.valueOf(x.getDistance());
+
+			System.out.print("A até " + x.getName() + ": ");
+			System.out.print(distancia + ", caminho: ");
+			x.getShortestPath().forEach(node -> System.out.print(node.getName()));
+			System.out.println(x.getName());
+
+
+		});
+
+	} //RUN
+} //CLASS

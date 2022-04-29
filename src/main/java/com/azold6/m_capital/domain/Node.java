@@ -15,6 +15,15 @@ public class Node {
 
     Map<Node, Integer> adjacentNodes = new HashMap<>();
 
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", shortestPath=" + shortestPath +
+                ", distance=" + distance +
+                '}';
+    }
+
     public void addDestination(Node destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
