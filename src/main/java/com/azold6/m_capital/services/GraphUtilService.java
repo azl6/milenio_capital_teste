@@ -12,8 +12,6 @@ import java.util.Set;
 @Service
 public class GraphUtilService {
 
-
-
     public static GraphUtil calculateShortestPathFromSource(GraphUtil graphUtil, NodeUtil source) {
         source.setDistance(0);
 

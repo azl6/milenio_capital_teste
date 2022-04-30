@@ -1,6 +1,7 @@
 package com.azold6.m_capital.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,10 +12,10 @@ public class Graph {
     private Integer id;
 
     @OneToMany(mappedBy = "graph")
-    private List<Path> paths;
+    private List<Path> data;
 
-    public Graph(List<Path> paths) {
-        this.paths = paths;
+    public Graph(List<Path> data) {
+        this.data = data;
     }
 
     public Graph() {
@@ -28,11 +29,12 @@ public class Graph {
         this.id = id;
     }
 
-    public List<Path> getPaths() {
-        return paths;
+    public List<Path> getData() {
+        return data;
     }
 
-    public void setPaths(List<Path> paths) {
-        this.paths = paths;
+    public void setData(List<Path> data) {
+        this.data = data;
     }
 }
+

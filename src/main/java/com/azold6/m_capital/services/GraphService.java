@@ -18,4 +18,9 @@ public class GraphService {
         Optional<Graph> obj = graphRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(1, "Graph not found"));
     }
+
+    public Graph saveGraph(Graph graph){
+        //validar se existe
+        return graphRepository.save(graph);
+    }
 }
