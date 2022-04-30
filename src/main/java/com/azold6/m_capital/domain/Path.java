@@ -1,10 +1,13 @@
 package com.azold6.m_capital.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 public class Path {
 
+    @JsonIgnore //retirar posteriormente
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,6 +15,7 @@ public class Path {
     private String target;
     private Integer distance;
 
+    @JsonIgnore //retirar posteriormente
     @ManyToOne
     @JoinColumn(name = "graph_id")
     private Graph graph;
@@ -20,6 +24,9 @@ public class Path {
         this.source = source;
         this.target = target;
         this.distance = distance;
+    }
+
+    public Path() {
     }
 
     public String getSource() {

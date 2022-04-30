@@ -17,6 +17,9 @@ public class Graph {
         this.paths = paths;
     }
 
+    public Graph() {
+    }
+
     public Integer getId() {
         return id;
     }

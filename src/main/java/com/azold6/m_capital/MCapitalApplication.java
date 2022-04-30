@@ -6,7 +6,7 @@ import com.azold6.m_capital.domain.NodeUtil;
 import com.azold6.m_capital.domain.Path;
 import com.azold6.m_capital.repositories.GraphRepository;
 import com.azold6.m_capital.repositories.PathRepository;
-import com.azold6.m_capital.services.GraphService;
+import com.azold6.m_capital.services.GraphUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +18,13 @@ import java.util.List;
 @SpringBootApplication
 public class MCapitalApplication implements CommandLineRunner {
 
-	private GraphService graphService;
+	private GraphUtilService graphUtilService;
 	private GraphRepository graphRepository;
 	private PathRepository pathRepository;
 
 	@Autowired
-	public MCapitalApplication(GraphService graphService, GraphRepository graphRepository, PathRepository pathRepository){
-		this.graphService = graphService;
+	public MCapitalApplication(GraphUtilService graphUtilService, GraphRepository graphRepository, PathRepository pathRepository){
+		this.graphUtilService = graphUtilService;
 		this.graphRepository = graphRepository;
 		this.pathRepository = pathRepository;
 	}
@@ -75,7 +75,7 @@ public class MCapitalApplication implements CommandLineRunner {
 		graphUtil.addNode(nodeF);
 		graphUtil.addNode(nodeE);
 
-		graphUtil = graphService.calculateShortestPathFromSource(graphUtil, nodeA);
+		graphUtil = graphUtilService.calculateShortestPathFromSource(graphUtil, nodeA);
 
 		System.out.println("Menores distâncias a partir do node A:");
 		graphUtil.getNodes().forEach(x -> {
