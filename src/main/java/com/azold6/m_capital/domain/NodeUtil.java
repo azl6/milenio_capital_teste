@@ -5,15 +5,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Node {
+public class NodeUtil {
 
     private String name;
 
-    private List<Node> shortestPath = new LinkedList<>();
+    private List<NodeUtil> shortestPath = new LinkedList<>();
 
     private Integer distance = Integer.MAX_VALUE;
 
-    Map<Node, Integer> adjacentNodes = new HashMap<>();
+    Map<NodeUtil, Integer> adjacentNodes = new HashMap<>();
+
+    private GraphUtil graphUtil;
 
     @Override
     public String toString() {
@@ -24,11 +26,11 @@ public class Node {
                 '}';
     }
 
-    public void addDestination(Node destination, int distance) {
+    public void addDestination(NodeUtil destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
 
-    public Node(String name) {
+    public NodeUtil(String name) {
         this.name = name;
     }
 
@@ -40,11 +42,11 @@ public class Node {
         this.name = name;
     }
 
-    public List<Node> getShortestPath() {
+    public List<NodeUtil> getShortestPath() {
         return shortestPath;
     }
 
-    public void setShortestPath(List<Node> shortestPath) {
+    public void setShortestPath(List<NodeUtil> shortestPath) {
         this.shortestPath = shortestPath;
     }
 
@@ -56,11 +58,11 @@ public class Node {
         this.distance = distance;
     }
 
-    public Map<Node, Integer> getAdjacentNodes() {
+    public Map<NodeUtil, Integer> getAdjacentNodes() {
         return adjacentNodes;
     }
 
-    public void setAdjacentNodes(Map<Node, Integer> adjacentNodes) {
+    public void setAdjacentNodes(Map<NodeUtil, Integer> adjacentNodes) {
         this.adjacentNodes = adjacentNodes;
     }
 }

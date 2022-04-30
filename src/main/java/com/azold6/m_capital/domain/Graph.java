@@ -1,21 +1,35 @@
 package com.azold6.m_capital.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.List;
 
+@Entity
 public class Graph {
 
-    private Set<Node> nodes = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public void addNode(Node nodeA) {
-        nodes.add(nodeA);
+    @OneToMany(mappedBy = "graph")
+    private List<Path> paths;
+
+    public Graph(List<Path> paths) {
+        this.paths = paths;
     }
 
-    public Set<Node> getNodes() {
-        return nodes;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNodes(Set<Node> nodes) {
-        this.nodes = nodes;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
     }
 }
