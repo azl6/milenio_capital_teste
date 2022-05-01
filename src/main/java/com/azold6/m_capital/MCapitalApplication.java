@@ -1,9 +1,9 @@
 package com.azold6.m_capital;
 
 import com.azold6.m_capital.domain.Graph;
-import com.azold6.m_capital.domain.GraphUtil;
-import com.azold6.m_capital.domain.NodeUtil;
-import com.azold6.m_capital.domain.Path;
+import com.azold6.m_capital.domain.GraphShortestUtil;
+import com.azold6.m_capital.domain.NodeShortestUtil;
+import com.azold6.m_capital.domain.Route;
 import com.azold6.m_capital.repositories.GraphRepository;
 import com.azold6.m_capital.repositories.PathRepository;
 import com.azold6.m_capital.services.GraphUtilService;
@@ -35,12 +35,12 @@ public class MCapitalApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		NodeUtil nodeA = new NodeUtil("A");
-		NodeUtil nodeB = new NodeUtil("B");
-		NodeUtil nodeC = new NodeUtil("C");
-		NodeUtil nodeD = new NodeUtil("D");
-		NodeUtil nodeE = new NodeUtil("E");
-		NodeUtil nodeF = new NodeUtil("F");
+		NodeShortestUtil nodeA = new NodeShortestUtil("A");
+		NodeShortestUtil nodeB = new NodeShortestUtil("B");
+		NodeShortestUtil nodeC = new NodeShortestUtil("C");
+		NodeShortestUtil nodeD = new NodeShortestUtil("D");
+		NodeShortestUtil nodeE = new NodeShortestUtil("E");
+		NodeShortestUtil nodeF = new NodeShortestUtil("F");
 
 		nodeA.addDestination(nodeB, 10);
 		nodeA.addDestination(nodeC, 15);
@@ -51,50 +51,50 @@ public class MCapitalApplication implements CommandLineRunner {
 		nodeD.addDestination(nodeE, 1);
 		nodeE.addDestination(nodeF, 5);
 
-		Path path1 = new Path("A", "B", 10);
-		Path path2 = new Path("A", "C", 15);
-		Path path3 = new Path("B", "D", 12);
-		Path path4 = new Path("B", "E", 15);
-		Path path5 = new Path("C", "F", 10);
-		Path path6 = new Path("D", "F", 2);
-		Path path7 = new Path("D", "E", 1);
-		Path path8 = new Path("E", "F", 1);
+		Route route1 = new Route("A", "B", 10);
+		Route route2 = new Route("A", "C", 15);
+		Route route3 = new Route("B", "D", 12);
+		Route route4 = new Route("B", "E", 15);
+		Route route5 = new Route("C", "F", 10);
+		Route route6 = new Route("D", "F", 2);
+		Route route7 = new Route("D", "E", 1);
+		Route route8 = new Route("E", "F", 1);
 
-		List<Path> pathList = Arrays.asList(path1, path2, path3, path4,
-											path5, path6, path7, path8);
+		List<Route> routeList = Arrays.asList(route1, route2, route3, route4,
+                route5, route6, route7, route8);
 
-		Graph graph = new Graph(pathList);
-		pathList.forEach(x -> x.setGraph(graph));
+		Graph graph = new Graph(routeList);
+		routeList.forEach(x -> x.setGraph(graph));
 
-		GraphUtil graphUtil = new GraphUtil();
+		GraphShortestUtil graphShortestUtil = new GraphShortestUtil();
 
-		graphUtil.addNode(nodeA);
-		graphUtil.addNode(nodeB);
-		graphUtil.addNode(nodeC);
-		graphUtil.addNode(nodeD);
-		graphUtil.addNode(nodeF);
-		graphUtil.addNode(nodeE);
+		graphShortestUtil.addNode(nodeA);
+		graphShortestUtil.addNode(nodeB);
+		graphShortestUtil.addNode(nodeC);
+		graphShortestUtil.addNode(nodeD);
+		graphShortestUtil.addNode(nodeF);
+		graphShortestUtil.addNode(nodeE);
 
-		graphUtil = graphUtilService.calculateShortestPathFromSource(graphUtil, nodeA);
+		graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, nodeA);
 
-		System.out.println("Menores distâncias a partir do node A:");
-		graphUtil.getNodes().forEach(x -> {
-			String distancia;
-
-			if(x.getShortestPath().isEmpty())
-				return;
-			else
-				distancia = String.valueOf(x.getDistance());
-
-			System.out.print("A até " + x.getName() + ": ");
-			System.out.print(distancia + ", caminho: ");
-			x.getShortestPath().forEach(nodeUtil -> System.out.print(nodeUtil.getName()));
-			System.out.println(x.getName());
-		});
+//		System.out.println("Menores distâncias a partir do node A:");
+//		graphShortestUtil.getNodes().forEach(x -> {
+//			String distancia;
+//
+//			if(x.getShortestPath().isEmpty())
+//				return;
+//			else
+//				distancia = String.valueOf(x.getDistance());
+//
+//			System.out.print("A até " + x.getName() + ": ");
+//			System.out.print(distancia + ", caminho: ");
+//			x.getShortestPath().forEach(nodeShortestUtil -> System.out.print(nodeShortestUtil.getName()));
+//			System.out.println(x.getName());
+//		});
 
 		graphRepository.save(graph);
-		pathRepository.saveAll(Arrays.asList(path1, path2, path3, path4,
-												path5, path6, path7, path8));
+		pathRepository.saveAll(Arrays.asList(route1, route2, route3, route4,
+                route5, route6, route7, route8));
 
 	} //RUN
 } //CLASS

@@ -1,7 +1,7 @@
 package com.azold6.m_capital.services;
 
-import com.azold6.m_capital.domain.GraphUtil;
-import com.azold6.m_capital.domain.NodeUtil;
+import com.azold6.m_capital.domain.GraphShortestUtil;
+import com.azold6.m_capital.domain.NodeShortestUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -12,53 +12,53 @@ import java.util.Set;
 @Service
 public class GraphUtilService {
 
-    public static GraphUtil calculateShortestPathFromSource(GraphUtil graphUtil, NodeUtil source) {
+    public static GraphShortestUtil calculateShortestPathFromSource(GraphShortestUtil graphShortestUtil, NodeShortestUtil source) {
         source.setDistance(0);
 
-        Set<NodeUtil> settledNodeUtils = new HashSet<>();
-        Set<NodeUtil> unsettledNodeUtils = new HashSet<>();
+        Set<NodeShortestUtil> settledNodeShortestUtils = new HashSet<>();
+        Set<NodeShortestUtil> unsettledNodeShortestUtils = new HashSet<>();
 
-        unsettledNodeUtils.add(source);
+        unsettledNodeShortestUtils.add(source);
 
-        while (unsettledNodeUtils.size() != 0) {
-            NodeUtil currentNodeUtil = getLowestDistanceNode(unsettledNodeUtils);
-            unsettledNodeUtils.remove(currentNodeUtil);
-            for (Map.Entry<NodeUtil, Integer> adjacencyPair:
-                    currentNodeUtil.getAdjacentNodes().entrySet()) {
-                NodeUtil adjacentNodeUtil = adjacencyPair.getKey();
+        while (unsettledNodeShortestUtils.size() != 0) {
+            NodeShortestUtil currentNodeShortestUtil = getLowestDistanceNode(unsettledNodeShortestUtils);
+            unsettledNodeShortestUtils.remove(currentNodeShortestUtil);
+            for (Map.Entry<NodeShortestUtil, Integer> adjacencyPair:
+                    currentNodeShortestUtil.getAdjacentNodes().entrySet()) {
+                NodeShortestUtil adjacentNodeShortestUtil = adjacencyPair.getKey();
                 Integer edgeWeight = adjacencyPair.getValue();
-                if (!settledNodeUtils.contains(adjacentNodeUtil)) {
-                    calculateMinimumDistance(adjacentNodeUtil, edgeWeight, currentNodeUtil);
-                    unsettledNodeUtils.add(adjacentNodeUtil);
+                if (!settledNodeShortestUtils.contains(adjacentNodeShortestUtil)) {
+                    calculateMinimumDistance(adjacentNodeShortestUtil, edgeWeight, currentNodeShortestUtil);
+                    unsettledNodeShortestUtils.add(adjacentNodeShortestUtil);
                 }
             }
-            settledNodeUtils.add(currentNodeUtil);
+            settledNodeShortestUtils.add(currentNodeShortestUtil);
         }
-        return graphUtil;
+        return graphShortestUtil;
     }
 
 
-    private static NodeUtil getLowestDistanceNode(Set <NodeUtil> unsettledNodeUtils) {
-        NodeUtil lowestDistanceNodeUtil = null;
+    private static NodeShortestUtil getLowestDistanceNode(Set <NodeShortestUtil> unsettledNodeShortestUtils) {
+        NodeShortestUtil lowestDistanceNodeShortestUtil = null;
         int lowestDistance = Integer.MAX_VALUE;
-        for (NodeUtil nodeUtil : unsettledNodeUtils) {
-            int nodeDistance = nodeUtil.getDistance();
+        for (NodeShortestUtil nodeShortestUtil : unsettledNodeShortestUtils) {
+            int nodeDistance = nodeShortestUtil.getDistance();
             if (nodeDistance < lowestDistance) {
                 lowestDistance = nodeDistance;
-                lowestDistanceNodeUtil = nodeUtil;
+                lowestDistanceNodeShortestUtil = nodeShortestUtil;
             }
         }
-        return lowestDistanceNodeUtil;
+        return lowestDistanceNodeShortestUtil;
     }
 
-    private static void calculateMinimumDistance(NodeUtil evaluationNodeUtil,
-                                                 Integer edgeWeigh, NodeUtil sourceNodeUtil) {
-        Integer sourceDistance = sourceNodeUtil.getDistance();
-        if (sourceDistance + edgeWeigh < evaluationNodeUtil.getDistance()) {
-            evaluationNodeUtil.setDistance(sourceDistance + edgeWeigh);
-            LinkedList<NodeUtil> shortestPath = new LinkedList<>(sourceNodeUtil.getShortestPath());
-            shortestPath.add(sourceNodeUtil);
-            evaluationNodeUtil.setShortestPath(shortestPath);
+    private static void calculateMinimumDistance(NodeShortestUtil evaluationNodeShortestUtil,
+                                                 Integer edgeWeigh, NodeShortestUtil sourceNodeShortestUtil) {
+        Integer sourceDistance = sourceNodeShortestUtil.getDistance();
+        if (sourceDistance + edgeWeigh < evaluationNodeShortestUtil.getDistance()) {
+            evaluationNodeShortestUtil.setDistance(sourceDistance + edgeWeigh);
+            LinkedList<NodeShortestUtil> shortestPath = new LinkedList<>(sourceNodeShortestUtil.getShortestPath());
+            shortestPath.add(sourceNodeShortestUtil);
+            evaluationNodeShortestUtil.setShortestPath(shortestPath);
         }
     }
 }

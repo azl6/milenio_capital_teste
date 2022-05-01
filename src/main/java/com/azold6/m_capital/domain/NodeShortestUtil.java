@@ -1,21 +1,21 @@
 package com.azold6.m_capital.domain;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class NodeUtil {
+public class NodeShortestUtil {
 
     private String name;
 
-    private List<NodeUtil> shortestPath = new LinkedList<>();
+    private List<NodeShortestUtil> shortestPath = new LinkedList<>();
 
     private Integer distance = Integer.MAX_VALUE;
 
-    Map<NodeUtil, Integer> adjacentNodes = new HashMap<>();
+    Map<NodeShortestUtil, Integer> adjacentNodes = new HashMap<>();
 
-    private GraphUtil graphUtil;
+    private GraphShortestUtil graphShortestUtil;
+
+    public NodeShortestUtil() {
+    }
 
     @Override
     public String toString() {
@@ -26,11 +26,11 @@ public class NodeUtil {
                 '}';
     }
 
-    public void addDestination(NodeUtil destination, int distance) {
+    public void addDestination(NodeShortestUtil destination, int distance) {
         adjacentNodes.put(destination, distance);
     }
 
-    public NodeUtil(String name) {
+    public NodeShortestUtil(String name) {
         this.name = name;
     }
 
@@ -42,11 +42,11 @@ public class NodeUtil {
         this.name = name;
     }
 
-    public List<NodeUtil> getShortestPath() {
+    public List<NodeShortestUtil> getShortestPath() {
         return shortestPath;
     }
 
-    public void setShortestPath(List<NodeUtil> shortestPath) {
+    public void setShortestPath(List<NodeShortestUtil> shortestPath) {
         this.shortestPath = shortestPath;
     }
 
@@ -58,11 +58,11 @@ public class NodeUtil {
         this.distance = distance;
     }
 
-    public Map<NodeUtil, Integer> getAdjacentNodes() {
+    public Map<NodeShortestUtil, Integer> getAdjacentNodes() {
         return adjacentNodes;
     }
 
-    public void setAdjacentNodes(Map<NodeUtil, Integer> adjacentNodes) {
+    public void setAdjacentNodes(Map<NodeShortestUtil, Integer> adjacentNodes) {
         this.adjacentNodes = adjacentNodes;
     }
 }

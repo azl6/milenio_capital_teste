@@ -25,7 +25,7 @@ public class GraphController {
         return ResponseEntity.status(HttpStatus.OK).body(obj);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Graph> saveGraph(@RequestBody Graph graph){
         Graph obj = graphService.saveGraph(graph);
         graph.getData().forEach(path -> {

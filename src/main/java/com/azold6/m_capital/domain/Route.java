@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-public class Path {
+public class Route {
 
     @JsonIgnore //retirar posteriormente
     @Id
@@ -20,13 +20,13 @@ public class Path {
     @JoinColumn(name = "graph_id")
     private Graph graph;
 
-    public Path(String source, String target, Integer distance) {
+    public Route(String source, String target, Integer distance) {
         this.source = source;
         this.target = target;
         this.distance = distance;
     }
 
-    public Path() {
+    public Route() {
     }
 
     public String getSource() {
