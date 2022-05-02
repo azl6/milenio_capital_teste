@@ -42,13 +42,13 @@ public class MCapitalApplication implements CommandLineRunner {
 		NodeShortestUtil nodeE = new NodeShortestUtil("E");
 		NodeShortestUtil nodeF = new NodeShortestUtil("F");
 
-		nodeA.addDestination(nodeB, 10);
-		nodeA.addDestination(nodeC, 15);
-		nodeB.addDestination(nodeD, 12);
-		nodeB.addDestination(nodeE, 15);
+		nodeA.addDestination(nodeB, 10); //p
+		nodeA.addDestination(nodeC, 15); //p
+		nodeB.addDestination(nodeD, 12); //p
+		nodeB.addDestination(nodeE, 15); //p
 		nodeC.addDestination(nodeF, 10);
 		nodeD.addDestination(nodeF, 2);
-		nodeD.addDestination(nodeE, 1);
+		nodeD.addDestination(nodeE, 1); //p
 		nodeE.addDestination(nodeF, 5);
 
 		Route route1 = new Route("A", "B", 10);
@@ -77,20 +77,20 @@ public class MCapitalApplication implements CommandLineRunner {
 
 		graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, nodeA);
 
-//		System.out.println("Menores distâncias a partir do node A:");
-//		graphShortestUtil.getNodes().forEach(x -> {
-//			String distancia;
-//
-//			if(x.getShortestPath().isEmpty())
-//				return;
-//			else
-//				distancia = String.valueOf(x.getDistance());
-//
-//			System.out.print("A até " + x.getName() + ": ");
-//			System.out.print(distancia + ", caminho: ");
-//			x.getShortestPath().forEach(nodeShortestUtil -> System.out.print(nodeShortestUtil.getName()));
-//			System.out.println(x.getName());
-//		});
+		System.out.println("Menores distâncias a partir do node A:");
+		graphShortestUtil.getNodes().forEach(x -> {
+			String distancia;
+
+			if(x.getShortestPath().isEmpty())
+				return;
+			else
+				distancia = String.valueOf(x.getDistance());
+
+			System.out.print("A até " + x.getName() + ": ");
+			System.out.print(distancia + ", caminho: ");
+			x.getShortestPath().forEach(nodeShortestUtil -> System.out.print(nodeShortestUtil.getName()));
+			System.out.println(x.getName());
+		});
 
 		graphRepository.save(graph);
 		pathRepository.saveAll(Arrays.asList(route1, route2, route3, route4,

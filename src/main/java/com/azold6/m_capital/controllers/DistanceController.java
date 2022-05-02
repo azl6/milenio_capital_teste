@@ -3,17 +3,21 @@ package com.azold6.m_capital.controllers;
 import com.azold6.m_capital.domain.Graph;
 import com.azold6.m_capital.domain.GraphShortestUtil;
 import com.azold6.m_capital.domain.NodeShortestUtil;
+import com.azold6.m_capital.domain.Route;
+import com.azold6.m_capital.dto.DistanceRouteResponseDto;
 import com.azold6.m_capital.services.GraphService;
 import com.azold6.m_capital.services.GraphUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,49 +30,83 @@ public class DistanceController {
     @Autowired
     private GraphUtilService graphUtilService;
 
-    @PostMapping("/{graphId}/from/{town1}/to/{town2}")
-    public ResponseEntity<String> findShortestPathBetweenTwoCities(@PathVariable Integer graphId,
-                                                                   @PathVariable String town1,
-                                                                   @PathVariable String town2){
+    @PostMapping("/{graphId}/from/{source}/to/{target}")
+    public ResponseEntity<DistanceRouteResponseDto> findShortestPathBetweenTwoCities(@PathVariable Integer graphId,
+                                                                   @PathVariable String source,
+                                                                   @PathVariable String target){
 
+        //buscando pelo grafo salvo
         Graph graph = graphService.findGraphById(graphId);
 
-        //distinct by attribute
-        List<NodeShortestUtil> nodeList = new ArrayList<>(graph.getData().stream().map(path -> {
-            return new NodeShortestUtil(path.getSource());
-        }).collect(Collectors.toMap(NodeShortestUtil::getName, p -> p, (p, q) -> p, LinkedHashMap::new)).values());
+        //criando uma lista de nodes (vértices) do grafo
+        List<NodeShortestUtil> nodeList = new ArrayList<>();
 
-        nodeList.forEach(node -> {
-            String source = node.getName();
-            graph.getData().forEach(path -> {
+        //percorrendo as rotas do grafo e criando nodes
+        for(Route route: graph.getData()){
+            NodeShortestUtil nodeSource = new NodeShortestUtil(route.getSource());
+            NodeShortestUtil nodeTarget = new NodeShortestUtil(route.getTarget());
+            
+            nodeList.addAll(Arrays.asList(nodeTarget, nodeSource));
+        };
 
-                if(path.getSource().equals(source)){
-                    String target = path.getTarget();
+        //filtrando os nodes para serem únicos
+        nodeList = nodeList.stream().filter(distinctByKey(NodeShortestUtil::getName)).collect(Collectors.toList());
 
-                    for (NodeShortestUtil nodeShortestUtil : nodeList) {
-                        if (nodeShortestUtil.getName().equals(target))
-                            node.addDestination(nodeShortestUtil, nodeShortestUtil.getDistance());
+        //percorrendo cada node e criando seus caminhos
+        for(NodeShortestUtil node: nodeList){
+            for(Route route: graph.getData()){
+                if(route.getSource().equals(node.getName())){
+                    for(NodeShortestUtil targetNode: nodeList){ //trocar
+                        if(targetNode.getName().equals(route.getTarget())){
+                            node.addDestination(targetNode, route.getDistance());
+                        }
                     }
-                }
-                    node.addDestination(new NodeShortestUtil(path.getTarget()), path.getDistance());
+                }};
+        };
 
-                }
-            );
-        });
-
+        //adicionando os nodes direcionados ao grafo
         GraphShortestUtil graphShortestUtil = new GraphShortestUtil();
-        NodeShortestUtil sourceNode = new NodeShortestUtil();
-        for (NodeShortestUtil nodeShortestUtil : nodeList) {
-            System.out.println(nodeShortestUtil);
-            graphShortestUtil.addNode(nodeShortestUtil);
-            if(town1.equals(nodeShortestUtil.getName()))
-                sourceNode = nodeShortestUtil;
+        for(NodeShortestUtil node: nodeList){
+            graphShortestUtil.addNode(node);
         }
 
-        //graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, sourceNode);
-        //PROBLEMA NO DISTANCE E NA LINHA ACIMA
+        //encontrando o node da cidade de origem
+        NodeShortestUtil sourceNode = nodeList
+                .stream()
+                .filter(x -> x.getName().equals(source)).collect(Collectors.toList()).get(0);
 
 
-        return ResponseEntity.ok().body("It worked out!");
+        //PRINT DOS NODES ADJACENTES
+//        nodeList.forEach(node -> {
+//            System.out.println("\nNodes adjacentes a " + node.getName() + ":");
+//            for (Map.Entry entry : node.getAdjacentNodes().entrySet()) {
+//                System.out.println("Node: " + entry.getKey() + "; Distância: " + entry.getValue());
+//            }
+//        });
+
+        //calculando os menores caminhos a partir do source passado como pathvariable
+        graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, sourceNode);
+
+        DistanceRouteResponseDto obj = new DistanceRouteResponseDto();
+        graphShortestUtil.getNodes().forEach(x -> {
+            String distance = String.valueOf(x.getDistance());
+
+            if(x.getShortestPath().isEmpty() || !x.getName().equals(target))
+                return;
+
+            List<String> path = new ArrayList<>();
+            x.getShortestPath().forEach(nodeShortestUtil -> path.add(nodeShortestUtil.getName()));
+
+            obj.setDistance(Integer.valueOf(distance));
+            obj.setPath(path);
+        });
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(obj);
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 }
