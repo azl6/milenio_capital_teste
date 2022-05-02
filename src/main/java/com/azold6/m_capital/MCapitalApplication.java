@@ -1,8 +1,8 @@
 package com.azold6.m_capital;
 
 import com.azold6.m_capital.domain.Graph;
-import com.azold6.m_capital.domain.GraphShortestUtil;
-import com.azold6.m_capital.domain.NodeShortestUtil;
+import com.azold6.m_capital.utils.GraphShortestUtil;
+import com.azold6.m_capital.utils.NodeShortestUtil;
 import com.azold6.m_capital.domain.Route;
 import com.azold6.m_capital.repositories.GraphRepository;
 import com.azold6.m_capital.repositories.PathRepository;
@@ -33,8 +33,9 @@ public class MCapitalApplication implements CommandLineRunner {
 		SpringApplication.run(MCapitalApplication.class, args);
 	}
 
-	@Override
+	@Override //MOCKDATA PARA TESTES
 	public void run(String... args) throws Exception {
+
 		NodeShortestUtil nodeA = new NodeShortestUtil("A");
 		NodeShortestUtil nodeB = new NodeShortestUtil("B");
 		NodeShortestUtil nodeC = new NodeShortestUtil("C");
@@ -42,13 +43,13 @@ public class MCapitalApplication implements CommandLineRunner {
 		NodeShortestUtil nodeE = new NodeShortestUtil("E");
 		NodeShortestUtil nodeF = new NodeShortestUtil("F");
 
-		nodeA.addDestination(nodeB, 10); //p
-		nodeA.addDestination(nodeC, 15); //p
-		nodeB.addDestination(nodeD, 12); //p
-		nodeB.addDestination(nodeE, 15); //p
+		nodeA.addDestination(nodeB, 10);
+		nodeA.addDestination(nodeC, 15);
+		nodeB.addDestination(nodeD, 12);
+		nodeB.addDestination(nodeE, 15);
 		nodeC.addDestination(nodeF, 10);
 		nodeD.addDestination(nodeF, 2);
-		nodeD.addDestination(nodeE, 1); //p
+		nodeD.addDestination(nodeE, 1);
 		nodeE.addDestination(nodeF, 5);
 
 		Route route1 = new Route("A", "B", 10);
@@ -76,21 +77,6 @@ public class MCapitalApplication implements CommandLineRunner {
 		graphShortestUtil.addNode(nodeE);
 
 		graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, nodeA);
-
-		System.out.println("Menores distâncias a partir do node A:");
-		graphShortestUtil.getNodes().forEach(x -> {
-			String distancia;
-
-			if(x.getShortestPath().isEmpty())
-				return;
-			else
-				distancia = String.valueOf(x.getDistance());
-
-			System.out.print("A até " + x.getName() + ": ");
-			System.out.print(distancia + ", caminho: ");
-			x.getShortestPath().forEach(nodeShortestUtil -> System.out.print(nodeShortestUtil.getName()));
-			System.out.println(x.getName());
-		});
 
 		graphRepository.save(graph);
 		pathRepository.saveAll(Arrays.asList(route1, route2, route3, route4,

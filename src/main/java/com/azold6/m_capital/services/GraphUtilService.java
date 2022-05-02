@@ -1,7 +1,7 @@
 package com.azold6.m_capital.services;
 
-import com.azold6.m_capital.domain.GraphShortestUtil;
-import com.azold6.m_capital.domain.NodeShortestUtil;
+import com.azold6.m_capital.utils.GraphShortestUtil;
+import com.azold6.m_capital.utils.NodeShortestUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

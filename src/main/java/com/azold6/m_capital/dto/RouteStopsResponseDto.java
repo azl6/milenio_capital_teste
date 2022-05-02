@@ -8,6 +8,11 @@ public class RouteStopsResponseDto {
     public RouteStopsResponseDto() {
     }
 
+    public RouteStopsResponseDto(String route, Integer stops) {
+        this.route = route;
+        this.stops = stops;
+    }
+
     public String getRoute() {
         return route;
     }

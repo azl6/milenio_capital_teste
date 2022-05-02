@@ -1,8 +1,8 @@
 package com.azold6.m_capital.controllers;
 
 import com.azold6.m_capital.domain.Graph;
-import com.azold6.m_capital.domain.GraphShortestUtil;
-import com.azold6.m_capital.domain.NodeShortestUtil;
+import com.azold6.m_capital.utils.GraphShortestUtil;
+import com.azold6.m_capital.utils.NodeShortestUtil;
 import com.azold6.m_capital.domain.Route;
 import com.azold6.m_capital.dto.DistanceRouteResponseDto;
 import com.azold6.m_capital.services.GraphService;
@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.Node;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -24,11 +22,14 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/distance")
 public class DistanceController {
 
-    @Autowired
     private GraphService graphService;
+    private GraphUtilService graphUtilService;
 
     @Autowired
-    private GraphUtilService graphUtilService;
+    public DistanceController(GraphService graphService, GraphUtilService graphUtilService){
+        this.graphService = graphService;
+        this.graphUtilService = graphUtilService;
+    }
 
     @PostMapping("/{graphId}/from/{source}/to/{target}")
     public ResponseEntity<DistanceRouteResponseDto> findShortestPathBetweenTwoCities(@PathVariable Integer graphId,
@@ -76,17 +77,11 @@ public class DistanceController {
                 .filter(x -> x.getName().equals(source)).collect(Collectors.toList()).get(0);
 
 
-        //PRINT DOS NODES ADJACENTES
-//        nodeList.forEach(node -> {
-//            System.out.println("\nNodes adjacentes a " + node.getName() + ":");
-//            for (Map.Entry entry : node.getAdjacentNodes().entrySet()) {
-//                System.out.println("Node: " + entry.getKey() + "; Distância: " + entry.getValue());
-//            }
-//        });
-
         //calculando os menores caminhos a partir do source passado como pathvariable
         graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, sourceNode);
 
+
+        //
         DistanceRouteResponseDto obj = new DistanceRouteResponseDto();
         graphShortestUtil.getNodes().forEach(x -> {
             String distance = String.valueOf(x.getDistance());
@@ -105,6 +100,7 @@ public class DistanceController {
         return ResponseEntity.status(HttpStatus.OK).body(obj);
     }
 
+    //função para aplicar o stream.distinct() por atributo de uma classe
     public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(keyExtractor.apply(t));

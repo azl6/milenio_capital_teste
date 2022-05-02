@@ -1,4 +1,4 @@
-package com.azold6.m_capital.domain;
+package com.azold6.m_capital.utils;
 
 import java.util.*;
 

@@ -1,6 +1,7 @@
 package com.azold6.m_capital.controllers;
 
-import com.azold6.m_capital.dto.RoutesResponseDto;
+import com.azold6.m_capital.services.GraphService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,16 +9,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/routes")
 public class RouteController {
 
-    @GetMapping(value = {"/{graphId}/from/{town1}/to/{town2}?maxStops={maxStops}", "/{graphId}/from/{town1}/to/{town2}"})
-    public ResponseEntity<String> findRoutesWithMaxStops(@PathVariable Integer graphId,
-                                                         @PathVariable Character town1,
-                                                         @PathVariable Character town2,
-                                                         @RequestParam(required = false) Integer maxStops){
-        System.out.println(graphId);
-        System.out.println(town1);
-        System.out.println(town2);
-        System.out.println(maxStops); //returns null
+    private GraphService graphService;
 
-        return ResponseEntity.ok().body("It worked out!");
+    @Autowired
+    public RouteController(GraphService graphService){
+        this.graphService = graphService;
+    }
+
+    @GetMapping(value = {"/{graphId}/from/{source}/to/{target}?maxStops={maxStops}", "/{graphId}/from/{source}/to/{target}"})
+    public ResponseEntity<String> findRoutesWithMaxStops(@PathVariable Integer graphId,
+                                                         @PathVariable String source,
+                                                         @PathVariable String target,
+                                                         @RequestParam(required = false) Integer maxStops){
+
+        return ResponseEntity.ok("Não fui capaz de concluir este endpoint.");
     }
 }
