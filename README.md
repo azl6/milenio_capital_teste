@@ -6,8 +6,13 @@
 ## Tecnologias usadas:
 
 + Java
-+ Spring Framework
- FINALIZAR TECNOLOGIAS
++ Docker
++ Spring Data JPA
++ Hibernate
++ JUnit 5
++ Prometheus
++ Grafana
++ Swagger
 
 ## Como rodar a aplicação?
 
@@ -31,7 +36,8 @@ docker exec -it mysql mysql -uroot -proot
 use teste_bhut;
 select * from [NOME_TABELA];
 ```
-COLOCAR IMAGEM DA TABELA ROTAS
+![route](https://user-images.githubusercontent.com/80921933/166553435-f53c0c8f-e51b-4bde-820d-ae0054972360.png)
+
 
 
 ## Features
@@ -49,7 +55,7 @@ COLOCAR IMAGEM TRANSACTIONAL
   `localhost:3000` - Grafana <br>
   `localhost:9090` - Prometheus
   
-+ <b>Testes unitários:</b> A fim de exemplificar a importância dos testes unitários, fiz um exemplo simples, de modo a garantir a integridade da função.
++ <b>Testes unitários:</b> Os testes são de suma importância para garantir a confiabilidade da aplicação. Neste projeto, foram aplicados testes na camada de serviço e na de acesso ao banco de dados (Repository).
 
 COLOCAR IMAGEM TESTES
 
