@@ -1,13 +1,14 @@
 package com.azold6.m_capital.domain;
 
+import com.azold6.m_capital.dto.RouteResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Route {
+public class Route implements Serializable {
 
-    @JsonIgnore //retirar posteriormente
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -15,7 +16,6 @@ public class Route {
     private String target;
     private Integer distance;
 
-    @JsonIgnore //retirar posteriormente
     @ManyToOne
     @JoinColumn(name = "graph_id")
     private Graph graph;
@@ -27,6 +27,10 @@ public class Route {
     }
 
     public Route() {
+    }
+
+    public RouteResponseDto toResponseDto(){
+        return new RouteResponseDto(this.source, this.getTarget(), this.getDistance());
     }
 
     public String getSource() {
