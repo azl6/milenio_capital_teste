@@ -81,7 +81,6 @@ public class DistanceController {
         graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, sourceNode);
 
 
-        //
         DistanceRouteResponseDto obj = new DistanceRouteResponseDto();
         graphShortestUtil.getNodes().forEach(x -> {
             String distance = String.valueOf(x.getDistance());
@@ -91,6 +90,7 @@ public class DistanceController {
 
             List<String> path = new ArrayList<>();
             x.getShortestPath().forEach(nodeShortestUtil -> path.add(nodeShortestUtil.getName()));
+            path.add(target);
 
             obj.setDistance(Integer.valueOf(distance));
             obj.setPath(path);
