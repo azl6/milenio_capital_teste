@@ -7,6 +7,8 @@ import com.azold6.m_capital.domain.Route;
 import com.azold6.m_capital.dto.DistanceRouteResponseDto;
 import com.azold6.m_capital.services.GraphService;
 import com.azold6.m_capital.services.GraphUtilService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/distance")
+@RequestMapping("/distance")
 public class DistanceController {
 
     private GraphService graphService;
@@ -31,6 +33,7 @@ public class DistanceController {
         this.graphUtilService = graphUtilService;
     }
 
+    @ApiOperation("Encontrar o menor caminho entre duas cidades")
     @PostMapping("/{graphId}/from/{source}/to/{target}")
     public ResponseEntity<DistanceRouteResponseDto> findShortestPathBetweenTwoCities(
                                                                    @PathVariable Integer graphId,

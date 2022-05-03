@@ -1,12 +1,13 @@
 package com.azold6.m_capital.controllers;
 
 import com.azold6.m_capital.services.GraphService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/routes")
+@RequestMapping("/routes")
 public class RouteController {
 
     private GraphService graphService;
@@ -16,6 +17,7 @@ public class RouteController {
         this.graphService = graphService;
     }
 
+    @ApiOperation(value = "Encontrar todas as possíveis rotas entre duas cidades")
     @GetMapping(value = {"/{graphId}/from/{source}/to/{target}?maxStops={maxStops}", "/{graphId}/from/{source}/to/{target}"})
     public ResponseEntity<String> findRoutesWithMaxStops(@PathVariable Integer graphId,
                                                          @PathVariable String source,

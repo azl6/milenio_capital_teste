@@ -4,13 +4,14 @@ import com.azold6.m_capital.domain.Graph;
 import com.azold6.m_capital.dto.GraphResponseDto;
 import com.azold6.m_capital.services.GraphService;
 import com.azold6.m_capital.services.RouteService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/graph")
+@RequestMapping("/graph")
 public class GraphController {
 
     private GraphService graphService;
@@ -21,6 +22,7 @@ public class GraphController {
         this.routeService = routeService;
     }
 
+    @ApiOperation("Encontrar um grafo por id")
     @GetMapping("/{graphId}")
     public ResponseEntity<GraphResponseDto> findGraphById(@PathVariable Integer graphId){
         Graph obj = graphService.findGraphById(graphId);
@@ -28,6 +30,7 @@ public class GraphController {
         return ResponseEntity.status(HttpStatus.OK).body(obj.toResponseDto());
     }
 
+    @ApiOperation("Salvar um grafo")
     @PostMapping
     public ResponseEntity<GraphResponseDto> saveGraph(@RequestBody Graph graph){
         Graph obj = graphService.saveGraph(graph);
