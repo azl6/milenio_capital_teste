@@ -43,6 +43,10 @@ public class DistanceController {
         //buscando pelo grafo salvo
         Graph graph = graphService.findGraphById(graphId);
 
+        //verificando se as cidades de origem e destino são iguais
+        if(source.equals(target)) return ResponseEntity.ok().body(
+                new DistanceRouteResponseDto(0, Arrays.asList(source)));
+
         //criando uma lista de nodes (vértices) do grafo
         List<NodeShortestUtil> nodeList = new ArrayList<>();
 
@@ -90,7 +94,7 @@ public class DistanceController {
         graphShortestUtil.getNodes().forEach(x -> {
             String distance = String.valueOf(x.getDistance());
 
-            if(x.getShortestPath().isEmpty() || !x.getName().equals(target))
+            if(x.getShortestPath().isEmpty() || !(x.getName().equals(target)))
                 return;
 
             List<String> path = new ArrayList<>();
@@ -100,7 +104,6 @@ public class DistanceController {
             obj.setDistance(Integer.valueOf(distance));
             obj.setPath(path);
         });
-
 
         //retorno
         return ResponseEntity.status(HttpStatus.OK).body(obj);
