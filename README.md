@@ -9,7 +9,7 @@
 + Docker
 + Spring Data JPA
 + Hibernate
-+ JUnit 5
++ Mockito
 + Prometheus
 + Grafana
 + Swagger
@@ -33,7 +33,7 @@ docker-compose up -d
 Como o ambiente da aplicação sobe via docker-compose, o MySQL é um contêiner, e para acessar as tabelas, deve-se executar, na raiz do projeto, os seguintes comandos:
 ```
 docker exec -it mysql mysql -uroot -proot
-use teste_bhut;
+use teste_mcapital;
 select * from [NOME_TABELA];
 ```
 ![route](https://user-images.githubusercontent.com/80921933/166553435-f53c0c8f-e51b-4bde-820d-ae0054972360.png)
@@ -55,9 +55,10 @@ COLOCAR IMAGEM TRANSACTIONAL
   `localhost:3000` - Grafana <br>
   `localhost:9090` - Prometheus
   
-+ <b>Testes unitários:</b> Os testes são de suma importância para garantir a confiabilidade da aplicação. Neste projeto, foram aplicados testes na camada de serviço e na de acesso ao banco de dados (Repository).
++ <b>Testes unitários:</b> Os testes são de suma importância para garantir a confiabilidade da aplicação. Neste projeto, foram aplicados testes na camada de serviço e na camada acesso ao banco de dados.
 
-COLOCAR IMAGEM TESTES
+![testes](https://user-images.githubusercontent.com/80921933/166562548-fd0a521b-c8fa-4921-b867-f69a3a3fc77b.png)
+
 
 + <b>Ferramentas de observabilidade:</b> O Grafana é uma ferramenta que, com o auxílio do Prometheus, gera dados importantes para verificarmos a saúde da nossa API. Por meio dela, podemos verificar, por exemplo, quantos erros foram gerados em um determinado endpoint, e, dessa forma, facilitar a vida do programador na busca por erros, ou até mesmo a otimizar endpoints falhos.
 
