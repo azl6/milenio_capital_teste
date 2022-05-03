@@ -32,7 +32,8 @@ public class DistanceController {
     }
 
     @PostMapping("/{graphId}/from/{source}/to/{target}")
-    public ResponseEntity<DistanceRouteResponseDto> findShortestPathBetweenTwoCities(@PathVariable Integer graphId,
+    public ResponseEntity<DistanceRouteResponseDto> findShortestPathBetweenTwoCities(
+                                                                   @PathVariable Integer graphId,
                                                                    @PathVariable String source,
                                                                    @PathVariable String target){
 
@@ -57,7 +58,7 @@ public class DistanceController {
         for(NodeShortestUtil node: nodeList){
             for(Route route: graph.getData()){
                 if(route.getSource().equals(node.getName())){
-                    for(NodeShortestUtil targetNode: nodeList){ //trocar
+                    for(NodeShortestUtil targetNode: nodeList){
                         if(targetNode.getName().equals(route.getTarget())){
                             node.addDestination(targetNode, route.getDistance());
                         }
@@ -74,13 +75,14 @@ public class DistanceController {
         //encontrando o node da cidade de origem
         NodeShortestUtil sourceNode = nodeList
                 .stream()
-                .filter(x -> x.getName().equals(source)).collect(Collectors.toList()).get(0);
+                .filter(node -> node.getName().equals(source)).collect(Collectors.toList()).get(0);
 
 
         //calculando os menores caminhos a partir do source passado como pathvariable
         graphShortestUtil = graphUtilService.calculateShortestPathFromSource(graphShortestUtil, sourceNode);
 
 
+        //constrói o objeto de retorno
         DistanceRouteResponseDto obj = new DistanceRouteResponseDto();
         graphShortestUtil.getNodes().forEach(x -> {
             String distance = String.valueOf(x.getDistance());
@@ -97,6 +99,7 @@ public class DistanceController {
         });
 
 
+        //retorno
         return ResponseEntity.status(HttpStatus.OK).body(obj);
     }
 

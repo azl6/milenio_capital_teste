@@ -37,7 +37,6 @@ public class GraphUtilService {
         return graphShortestUtil;
     }
 
-
     private static NodeShortestUtil getLowestDistanceNode(Set <NodeShortestUtil> unsettledNodeShortestUtils) {
         NodeShortestUtil lowestDistanceNodeShortestUtil = null;
         int lowestDistance = Integer.MAX_VALUE;
