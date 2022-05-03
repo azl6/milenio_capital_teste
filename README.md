@@ -72,7 +72,8 @@ No teste da Milênio Capital, simulei a seguinte regra de negócio: <b>Um grafo 
 
 + <b>Ferramentas de observabilidade:</b> O Grafana é uma ferramenta que, com o auxílio do Prometheus, gera dados importantes para verificarmos a saúde da nossa API. Por meio dela, podemos verificar, por exemplo, quantos erros foram gerados em um determinado endpoint, e, dessa forma, facilitar a vida do programador na busca por erros, ou até mesmo a otimizar endpoints falhos.
 
-COLOCAR IMAGEM GRAFANA DASHBOARD
+![grafana](https://user-images.githubusercontent.com/80921933/166597018-5c15e9b5-ba1a-48e1-bc92-2a7cc682bb7a.png)
+
 
 ## Melhorias
 
