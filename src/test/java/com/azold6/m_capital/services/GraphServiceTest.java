@@ -39,20 +39,6 @@ public class GraphServiceTest {
         verify(graphRepository, times(1)).save(graph);
     }
 
-    @Test
-    public void findGraphByIdTest(){
-
-        //cenário
-        Graph graph = getGraph();
-
-        //execução
-        Mockito.when(graphRepository.findById(1)).thenReturn(Optional.of(graph));
-
-        //assert
-        //terminar
-        assertThat(graphService.findGraphById(1)).isEqualTo(graph);
-    }
-
     private Graph getGraph() {
         Graph graph = new Graph();
         graph.setId(null);
