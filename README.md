@@ -6,6 +6,7 @@
 ## Tecnologias usadas:
 
 + Java
++ Spring Boot
 + Docker
 + Spring Data JPA
 + Hibernate
@@ -13,24 +14,37 @@
 + Prometheus
 + Grafana
 + Swagger
++ MySQL
 
 ## Como rodar a aplicação?
 
 + 1- Clone o projeto para o diretório desejado
-+ 2- Abra um terminal (git bash, de preferência) na raiz do projeto
-+ 3- Execute os seguintes comandos:
++ 2- Troque o valor da chave "spring.profiles.active", dentro do arquivo "aplication.properties" para "test"
++ 3- Abra um terminal (git bash, de preferência) na raiz do projeto
++ 4- Execute os seguintes comandos:
+
 ```
 mvn clean install
 mvn clean package
 docker-compose up -d
 ```
 
-+ 4- Rode a aplicação com o IntelliJ
-+ 5- Acesse os endpoints da aplicação, via `localhost:8080/{endpointDesejado}`
++ 5- Volte o valor da chave do "spring.profiles.active" para "dev"
++ 5- Rode a aplicação com o IntelliJ
++ 6- Acesse os endpoints da aplicação, via `localhost:8080/{endpointDesejado}`
+
+## Endpoints disponíveis
+
++ `POST` localhost:8080/graph ✔️
++ `GET` localhost:8080/graph/[graphId] ✔️
++ `POST` localhost:8080/distance/[graphId]/from/[city1]/to/[cityB] ✔️
++ `GET` localhost:8080/routes/1/from/A/to/B?maxStops=[maxStops] ❌
 
 ## Acesso às tabelas
 
 Como o ambiente da aplicação sobe via docker-compose, o MySQL é um contêiner, e para acessar as tabelas, deve-se executar, na raiz do projeto, os seguintes comandos:
+
+<b>IMPORTANTE:</b> Caso esteja utilizando o Git Bash, substitua o primeiro comando por `winpty docker exec -it mysql mysql -uroot -proot`
 ```
 docker exec -it mysql mysql -uroot -proot
 use teste_mcapital;
