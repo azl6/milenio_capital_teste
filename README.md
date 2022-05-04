@@ -42,13 +42,23 @@ select * from [NOME_TABELA];
 
 ## Features
 
-+ <b>Validações de entrada:</b> Ao tentar realizar uma entrada com dados inválidos ou incompletos, o projeto retorna, precisamente, onde está o problema, por meio de uma lista de excessões personalizadas.
++ <b>Exceções personalizadas:</b> O código foi programado para lançar exceções descritivas, que auxiliam o programador a encontrar a origem do problema. Alguns exemplos do uso de exceções personalizadas são:
 
-COLOCAR IMAGEM VALIDAÇÃO
+A) Quando um grafo não é encontrado<br>
+![graphnotfound](https://user-images.githubusercontent.com/80921933/166590562-620bc102-6799-41cb-9317-abefafa0cd8c.png)
+
+
+B) Quando tenta-se cadastrar um grafo com rotas duplicadas<br>
+![graphroutedouble](https://user-images.githubusercontent.com/80921933/166589874-376810b4-0917-4df2-bb87-3e91be9bef57.png)
 
 + <b>Utilização do @Transactional:</b> A utilização do `@Transactional` é de suma importância em casos onde, por alguma regra de negócio, a transação do banco de dados não deve ser finalizada. A anotação é responsável pela execução do rollback, e evita a inserção/atualização/deleção de dados que, a priori, não deveriam ser modificados quando o fluxo de dados é interrompido.
 
-COLOCAR IMAGEM TRANSACTIONAL
+![transactional](https://user-images.githubusercontent.com/80921933/166587537-c6b8b546-1e8e-48b2-a037-64293292d550.png)
+
+No teste da Milênio Capital, simulei a seguinte regra de negócio: <b>Um grafo e suas rotas não podem ser salvos caso hajam rotas duplicadas</b>. Com a utilização do `@Transactional`, é possível reverter os dados salvos a partir do momento que o código identifica uma rota duplicada, já que o mesmo está configurado para lançar a exceção "ExistentPathException" quando isso ocorrer.
+
+![rotaDuplicada](https://user-images.githubusercontent.com/80921933/166587693-419b4280-e6bc-4cc3-a913-39d00f046f40.png)
+
 
 + <b>Subindo o ambiente via docker-compose:</b> Todo o ambiente da aplicação sobe via docker-compose. Pode-se, também, subir o app inteiro, fato que facilita o deploy em produção. Além disso, são disponibilizadas portas para aplicações de observabilidade, como:
 
@@ -62,8 +72,11 @@ COLOCAR IMAGEM TRANSACTIONAL
 
 + <b>Ferramentas de observabilidade:</b> O Grafana é uma ferramenta que, com o auxílio do Prometheus, gera dados importantes para verificarmos a saúde da nossa API. Por meio dela, podemos verificar, por exemplo, quantos erros foram gerados em um determinado endpoint, e, dessa forma, facilitar a vida do programador na busca por erros, ou até mesmo a otimizar endpoints falhos.
 
-COLOCAR IMAGEM GRAFANA DASHBOARD
+![graFANAAA](https://user-images.githubusercontent.com/80921933/166598671-bea3f93e-8397-49af-bd20-e62c0fa305b9.png)
+
 
 ## Melhorias
 
-COLOCAS MELHORIAS
++ Implementar endpoint para buscar todas as possíveis rotas;
++ Implementar testes de Controller;
++ Consumir a API com uma interface web. 
