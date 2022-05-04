@@ -1,8 +1,8 @@
 package com.azold6.m_capital.services;
 
 import com.azold6.m_capital.domain.Graph;
+import com.azold6.m_capital.exceptions.ObjectNotFoundException;
 import com.azold6.m_capital.repositories.GraphRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +16,10 @@ public class GraphService {
 
     public Graph findGraphById(Integer id){
         Optional<Graph> obj = graphRepository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(1, "Graph not found"));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("O id do grafo informado não está cadastrado."));
     }
 
     public Graph saveGraph(Graph graph){
-        //validar se existe
         return graphRepository.save(graph);
     }
 }

@@ -29,6 +29,17 @@ public class Route implements Serializable {
     public Route() {
     }
 
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", source='" + source + '\'' +
+                ", target='" + target + '\'' +
+                ", distance=" + distance +
+                ", graph id=" + graph.getId() +
+                '}';
+    }
+
     public RouteResponseDto toResponseDto(){
         return new RouteResponseDto(this.source, this.getTarget(), this.getDistance());
     }
