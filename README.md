@@ -35,10 +35,13 @@ docker-compose up -d
 
 ## Endpoints disponíveis
 
-+ `POST` localhost:8080/graph ✔️
-+ `GET` localhost:8080/graph/[graphId] ✔️
-+ `POST` localhost:8080/distance/[graphId]/from/[city1]/to/[cityB] ✔️
-+ `GET` localhost:8080/routes/1/from/A/to/B?maxStops=[maxStops] ❌
+✔️ `POST` localhost:8080/graph<br> 
+✔️ `GET` localhost:8080/graph/[graphId] <br> 
+✔️ `POST` localhost:8080/distance/[graphId]/from/[city1]/to/[cityB] <br> 
+❌ `GET` localhost:8080/routes/1/from/A/to/B?maxStops=[maxStops] 
+
+Todos os endpoints foram documentados no Swagger, seguido do seguinte endereço:
+`http://localhost:8080/swagger-ui.html#/`
 
 ## Acesso às tabelas
 
