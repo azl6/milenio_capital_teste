@@ -1,7 +1,7 @@
 ![milenio capital](https://user-images.githubusercontent.com/80921933/166538142-3d177de7-8596-4ebf-a9c4-997287fa70f1.png)
 # Teste técnico - Milênio Capital
 
->Status: Em andamento ⚠️
+>Status: Concluído ✔️
 
 ## Tecnologias usadas:
 
@@ -72,7 +72,7 @@ No teste da Milênio Capital, simulei a seguinte regra de negócio: <b>Um grafo 
 
 + <b>Ferramentas de observabilidade:</b> O Grafana é uma ferramenta que, com o auxílio do Prometheus, gera dados importantes para verificarmos a saúde da nossa API. Por meio dela, podemos verificar, por exemplo, quantos erros foram gerados em um determinado endpoint, e, dessa forma, facilitar a vida do programador na busca por erros, ou até mesmo a otimizar endpoints falhos.
 
-![graFANAAA](https://user-images.githubusercontent.com/80921933/166598671-bea3f93e-8397-49af-bd20-e62c0fa305b9.png)
+![grafanaaaaaaaaa](https://user-images.githubusercontent.com/80921933/166611935-fc209a83-f502-44a6-be1e-0e36079efc9c.png)
 
 
 ## Melhorias
