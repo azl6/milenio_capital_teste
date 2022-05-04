@@ -77,4 +77,6 @@ No teste da Milênio Capital, simulei a seguinte regra de negócio: <b>Um grafo 
 
 ## Melhorias
 
-COLOCAS MELHORIAS
++ Implementar endpoint para buscar todas as possíveis rotas;
++ Implementar testes de Controller;
++ Consumir a API com uma interface web. 
